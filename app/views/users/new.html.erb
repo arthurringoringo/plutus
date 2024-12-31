@@ -1,0 +1,43 @@
+<!-- app/views/users/new.html.erb -->
+<div class="flex items-center h-[90vh] bg-gray-200">
+  <div class="bg-white p-8 rounded-lg shadow-xl w-full sm:w-96">
+    <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-8">Sign Up</h2>
+
+    <%= form_with model: @user, local: true, url: signup_path, class: "space-y-6" do |form| %>
+
+      <% if @user.errors.any? %>
+        <div class="bg-red-100 text-red-600 p-4 rounded-md mb-4">
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :username, class: "block text-sm font-medium text-gray-600" %>
+        <%= form.text_field :username, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder: "Enter your username" %>
+      </div>
+
+      <div>
+        <%= form.label :email, class: "block text-sm font-medium text-gray-600" %>
+        <%= form.email_field :email, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder: "Enter your email" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "block text-sm font-medium text-gray-600" %>
+        <%= form.password_field :password, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder: "Enter your password" %>
+      </div>
+
+      <div class="mt-4">
+        <%= form.submit "Sign Up", class: "w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+    <% end %>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600">Already have an account? <%= link_to 'Login', login_path, class: "text-blue-500 hover:text-blue-600" %></p>
+    </div>
+  </div>
+</div>

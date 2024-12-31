@@ -1,0 +1,16 @@
+<div class="p-6 bg-gray-50">
+  <h1 class="text-3xl font-bold text-center text-blue-600 mb-4">Posts</h1>
+</div>
+
+<div class="p-6 bg-white shadow-md rounded-lg">
+  <%= link_to 'New Post', new_post_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300" %>
+
+  <!-- Turbo Frame to wrap the entire posts list -->
+  <%= turbo_frame_tag "posts" do %>
+    <div id="posts-list" class="mt-6">
+      <%= render @posts %>
+    </div>
+  <% end %>
+</div>
+
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plutus</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col">
+
+<% if current_user %>
+  <!-- Logged-in layout -->
+  <div class="flex flex-1">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-blue-600 text-white w-1/8 p-4 shadow-md transition-all duration-300 ease-in-out">
+      <div class="flex items-center justify-between mb-6">
+        <h2 id="sidebar-title" class="text-lg font-bold">Plutus</h2>
+        <button id="sidebar-toggle" class="text-white focus:outline-none">
+          &#9776; <!-- Hamburger icon -->
+        </button>
+      </div>
+      <nav class="space-y-2">
+        <%= link_to 'Dashboard', dashboard_path, class: "block py-2 px-4 rounded hover:bg-blue-500" %>
+        <%= link_to 'Profile', me_path, class: "block py-2 px-4 rounded hover:bg-blue-500" %>
+        <%= link_to 'Logout', logout_path, data: { turbo_method: :delete }, class: "block py-2 px-4 rounded hover:bg-red-500" %>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 bg-gray-200">
+      <header class="bg-blue-600 text-white p-4 shadow-md mb-4">
+        <div class="flex justify-between items-center">
+          <p>Welcome, <%= current_user.name %></p>
+        </div>
+      </header>
+      <div class="content">
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+<% else %>
+  <!-- Logged-out layout -->
+  <main class="flex-1 flex items-center justify-center bg-gray-200">
+    <%= yield %>
+  </main>
+<% end %>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white p-4">
+  <div class="container mx-auto text-center">
+    <p>&copy; 2024 Plutus. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebar = document.getElementById("sidebar");
+        const toggleButton = document.getElementById("sidebar-toggle");
+        const sidebarTitle = document.getElementById("sidebar-title");
+
+        toggleButton.addEventListener("click", () => {
+            sidebar.classList.toggle("w-1/5"); // Full size
+            sidebar.classList.toggle("w-16"); // Collapsed size
+            sidebarTitle.classList.toggle("hidden"); // Hide title when collapsed
+        });
+    });
+</script>
+</body>
+</html>

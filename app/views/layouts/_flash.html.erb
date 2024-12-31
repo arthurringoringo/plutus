@@ -1,0 +1,14 @@
+<% flash.each do |key, message| %>
+  <div class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 space-y-4 max-w-md w-full">
+    <div class="bg-white shadow-lg rounded-lg p-4 mb-4">
+      <div class="text-center">
+        <div class="p-4 rounded-lg text-white
+          <% if key == :notice %> bg-green-500
+          <% elsif key == :alert %> bg-red-500
+          <% end %>">
+          <%= message %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
