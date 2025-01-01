@@ -8,10 +8,11 @@ Rails.application.routes.draw do
   delete 'logout', to: 'auth#logout'
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
-  resources :posts
   get 'me', to: 'users#show'
   patch 'me', to: 'users#update'
   get 'dashboard', to: 'dashboard#index'
   root 'dashboard#index'
+
+  get 'plans', to: 'plans#show'
 
 end

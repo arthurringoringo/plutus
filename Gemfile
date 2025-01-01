@@ -49,6 +49,7 @@ gem "bootsnap", require: false
 gem 'dotenv'
 gem 'jwt'
 gem 'bcrypt'
+gem 'str_enum'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

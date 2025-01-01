@@ -1,0 +1,42 @@
+<turbo-frame id="me">
+  <%= form_with model: user, url: me_path, method: :patch, class: "space-y-6" do |form| %>
+    <div>
+      <%= form.label :name, "Name", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.text_field :name, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.name %>
+    </div>
+
+    <div>
+      <%= form.label :username, "Username", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.text_field :username, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.username %>
+    </div>
+
+    <div>
+      <%= form.label :email, "Email", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.email_field :email, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.email %>
+    </div>
+
+<!--    <div>-->
+      <%#= form.label :password, "Password", class: "block text-sm font-medium text-gray-600" %>
+      <%#= form.password_field :password, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.password %>
+<!--    </div>-->
+
+    <div>
+      <%= form.label :debt_percentage, "Debt Percentage", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.number_field :debt_percentage, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.debt_percentage %>
+    </div>
+
+    <div>
+      <%= form.label :save_percentage, "Save Percentage", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.number_field :save_percentage, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.save_percentage %>
+    </div>
+
+    <div>
+      <%= form.label :expense_percentage, "Expense Percentage", class: "block text-sm font-medium text-gray-600" %>
+      <%= form.number_field :expense_percentage, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500", value: user.expense_percentage %>
+    </div>
+
+    <div class="mt-4 text-center">
+      <%= form.submit "Update", class: "w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+  <% end %>
+</turbo-frame>

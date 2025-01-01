@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:create, :new]
   def new
     @user = User.new
   end
@@ -21,12 +21,19 @@ class UsersController < ApplicationController
 
   def update
     if current_user.update!(update_user_params)
-      @user = current_user
-      redirect_to :me, notice: "Account saved"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('me', partial: 'users/profiles', locals: { user: current_user })
+        end
+        format.html { redirect_to me_path, notice: "Profile updated successfully." }
+      end
     else
-      @user = current_user
-      flash[:alert] = "Something went wrong"
-      render :me
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('me', partial: 'users/profiles', locals: { user: current_user })
+        end
+        format.html { render :show, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -37,6 +44,6 @@ class UsersController < ApplicationController
   end
 
   def update_user_params
-    params.require(:user).permit(:name, :username, :email, :password)
+    params.require(:user).permit(:name, :username, :email, :password, :debt_percentage, :save_percentage, :expense_percentage)
   end
 end
