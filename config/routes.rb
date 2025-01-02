@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   root 'dashboard#index'
 
   get 'plans', to: 'plans#show'
+  post 'plans', to: 'plans#create'
 
 end

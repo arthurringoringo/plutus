@@ -7,15 +7,6 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*',
   ],
-  purge: [
-    './app/assets/**/*.js',
-    './app/assets/**/*.coffee',
-    './app/javascript/**/*.coffee',
-    './app/javascript/**/*.js',
-    './app/views/**/*.haml',
-    './app/views/**/*.erb',
-    './app/**/*.jsx',
-  ],
   theme: {
     extend: {
       fontFamily: {
