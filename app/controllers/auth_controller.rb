@@ -3,10 +3,12 @@ class AuthController < ApplicationController
   skip_before_action :authenticate_user!, only: [:login, :new]
 
   def new
+    redirect_to root_path if current_user
     @user = User.new
   end
 
   def login
+
     user = User.find_by(username: params[:username])
     p params[:username]
     if user && user.authenticate(params[:password])
@@ -19,7 +21,6 @@ class AuthController < ApplicationController
       render :new # No need for respond_to if it's just rendering HTML
     end
   end
-
 
   def logout
     cookies.delete(:jwt)
