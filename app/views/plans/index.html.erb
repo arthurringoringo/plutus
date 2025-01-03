@@ -1,0 +1,104 @@
+<div class="flex justify-between items-center mb-8">
+  <h1 class="text-2xl font-bold">Financial Planning</h1>
+
+  <!-- Year Filter -->
+  <div class="flex items-center space-x-4">
+    <%= link_to plans_path(year: (params[:year] || Time.now.year).to_i - 1), class: "text-gray-600 hover:text-gray-800 text-xl" do %>
+      &larr;
+    <% end %>
+
+    <span class="text-lg font-medium"><%= params[:year] || Time.now.year %></span>
+
+    <%= link_to plans_path(year: (params[:year] || Time.now.year).to_i + 1), class: "text-gray-600 hover:text-gray-800 text-xl" do %>
+      &rarr;
+    <% end %>
+  </div>
+</div>
+
+<!-- Current Month Section -->
+<% current_month = Date::MONTHNAMES[Time.now.month] %>
+<div class="mb-12 bg-yellow-100 border-4 border-yellow-400 p-6 rounded-lg shadow-lg">
+  <h2 class="text-2xl font-extrabold mb-4">Current Month: <%= current_month %></h2>
+  <div class="flex space-x-4">
+    <!-- Estimation Block -->
+    <div class="bg-yellow-200 p-4 rounded shadow-lg flex-1">
+      <h3 class="text-lg font-medium mb-2">Estimation</h3>
+      <p>Details about the estimation for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
+      <div class="mt-4">
+        <% if @current_month_plans[:estimation] %>
+          <%= link_to plan_path(id: @current_month_plans[:estimation].id),class: "bg-green-500 text-white rounded p-2" do %>
+          View
+          <% end %>
+        <% else %>
+          <%= link_to plans_path(year: params[:year], month: Time.now.month, plan_type: :estimation), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
+            Create
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Actual Block -->
+    <div class="bg-yellow-300 p-4 rounded shadow-lg flex-1">
+      <h3 class="text-lg font-medium mb-2">Actual</h3>
+      <p>Details about the actual for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
+      <div class="mt-4">
+        <% if @current_month_plans[:actual] %>
+          <%= link_to plan_path(id: @current_month_plans[:actual].id),class: "bg-green-500 text-white rounded p-2" do %>
+            View
+          <% end %>
+        <% else %>
+          <%= link_to plans_path(year: params[:year], month: Time.now.month, plan_type: :actual), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
+            Create
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- All Other Months -->
+<% Date::MONTHNAMES.compact.each do |month| %>
+  <% next if month == current_month %> <!-- Skip Current Month -->
+
+  <div class="mb-8">
+    <!-- Month Title -->
+    <h2 class="text-xl font-semibold mb-4"><%= month %></h2>
+
+    <!-- Inline Blocks -->
+    <div class="flex space-x-4">
+      <!-- Estimation Block -->
+      <div class="bg-blue-100 p-4 rounded shadow flex-1">
+        <h3 class="text-lg font-medium mb-2">Estimation</h3>
+        <p class="text-gray-600">Details about the estimation for <%= month %> <%= params[:year] || Time.now.year %>.</p>
+        <div class="mt-4">
+          <% if @estimation_plan[Date::MONTHNAMES.find_index(month)] %>
+            <%= link_to plan_path(id: @estimation_plan[Date::MONTHNAMES.find_index(month)].id),class: "bg-green-500 text-white rounded p-2" do %>
+              View
+            <% end %>
+          <% else %>
+            <%= link_to plans_path(year: params[:year], month: Date::MONTHNAMES.find_index(month), plan_type: :estimation), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
+              Create
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Actual Block -->
+      <div class="bg-green-100 p-4 rounded shadow flex-1">
+        <h3 class="text-lg font-medium mb-2">Actual</h3>
+        <p class="text-gray-600">Details about the actual for <%= month %> <%= params[:year] || Time.now.year %>.</p>
+        <div class="mt-4">
+          <% if @actual_plan[Date::MONTHNAMES.find_index(month)] %>
+            <%= link_to plan_path(id: @actual_plan[Date::MONTHNAMES.find_index(month)].id),class: "bg-green-500 text-white rounded p-2" do %>
+              View
+            <% end %>
+          <% else %>
+            <%= link_to plans_path(year: params[:year], month: Date::MONTHNAMES.find_index(month), plan_type: :actual), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
+              Create
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

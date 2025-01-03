@@ -1,96 +1,47 @@
-<div class="flex justify-between items-center mb-8">
-  <h1 class="text-2xl font-bold">Financial Planning</h1>
-
-  <!-- Year Filter -->
-  <div class="flex items-center space-x-4">
-    <%= link_to plans_path(year: (params[:year] || Time.now.year).to_i - 1), class: "text-gray-600 hover:text-gray-800 text-xl" do %>
-      &larr;
-    <% end %>
-
-    <span class="text-lg font-medium"><%= params[:year] || Time.now.year %></span>
-
-    <%= link_to plans_path(year: (params[:year] || Time.now.year).to_i + 1), class: "text-gray-600 hover:text-gray-800 text-xl" do %>
-      &rarr;
-    <% end %>
+<!--<h1> This is show plan page</h1>-->
+<%#= @plan.inspect %>
+<div class="mx-auto mt-8 space-y-8">
+  <!-- Plan Details -->
+  <div class="p-6 bg-gray-100 rounded-lg shadow">
+    <h1 class="text-3xl font-bold text-gray-700"><%= Date::MONTHNAMES[@plan.month] %> Plan</h1>
+    <div class="mt-4 text-gray-600">
+      <p class="text-lg"><strong>Year:</strong> <%= @plan.year %></p>
+      <p class="text-lg"><strong>Plan Type:</strong> <%= @plan.plan_type.capitalize %></p>
+      <p class="text-sm mt-2">Created At: <%= @plan.created_at.strftime("%B %d, %Y") %></p>
+      <p class="text-sm">Updated At: <%= @plan.updated_at.strftime("%B %d, %Y") %></p>
+    </div>
   </div>
-</div>
 
-<!-- Current Month Section -->
-<% current_month = Date::MONTHNAMES[Time.now.month] %>
-<div class="mb-12 bg-yellow-100 border-4 border-yellow-400 p-6 rounded-lg shadow-lg">
-  <h2 class="text-2xl font-extrabold mb-4">Current Month: <%= current_month %></h2>
-  <div class="flex space-x-4">
-    <!-- Estimation Block -->
-    <div class="bg-yellow-200 p-4 rounded shadow-lg flex-1">
-      <h3 class="text-lg font-medium mb-2">Estimation</h3>
-      <p>Details about the estimation for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
-      <div class="mt-4">
-        <% if @current_month_plans[:estimation] %>
-          <%= @current_month_plans[:estimation] %>
-        <% else %>
-          <%= link_to plans_path(year: params[:year], month: Time.now.month, plan_type: :estimation), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
-            Create
-          <% end %>
-        <% end %>
-      </div>
+  <!-- Inline Grid Boxes -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Income Box -->
+    <div class="p-6 bg-green-100 rounded-lg shadow hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-green-700">Income</h2>
+      <ul class="mt-4 space-y-2">
+        <%# @incomes.each do |income| %>
+<!--          <li class="text-gray-600"><%#= income.name %>: <%#= number_to_currency(income.amount) %></li>-->
+        <%# end %>
+      </ul>
     </div>
 
-    <!-- Actual Block -->
-    <div class="bg-yellow-300 p-4 rounded shadow-lg flex-1">
-      <h3 class="text-lg font-medium mb-2">Actual</h3>
-      <p>Details about the actual for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
-      <div class="mt-4">
-        <% if @current_month_plans[:actual] %>
-          <%= @current_month_plans[:actual] %>
-        <% else %>
-          <%= link_to plans_path(year: params[:year], month: Time.now.month, plan_type: :actual), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
-            Create
-          <% end %>
-        <% end %>
-      </div>
+    <!-- Expense Box -->
+    <div class="p-6 bg-red-100 rounded-lg shadow hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-red-700">Expenses</h2>
+      <ul class="mt-4 space-y-2">
+        <%# @expenses.each do |expense| %>
+<!--          <li class="text-gray-600"><%#= expense.name %>: <%#= number_to_currency(expense.amount) %></li>-->
+        <%# end %>
+      </ul>
+    </div>
+
+    <!-- Savings Box -->
+    <div class="p-6 bg-blue-100 rounded-lg shadow hover:shadow-md transition-shadow">
+      <h2 class="text-xl font-bold text-blue-700">Savings</h2>
+      <ul class="mt-4 space-y-2">
+        <%# @savings.each do |saving| %>
+<!--          <li class="text-gray-600"><%#= saving.name %>: <%#= number_to_currency(saving.amount) %></li>-->
+        <%# end %>
+      </ul>
     </div>
   </div>
 </div>
-
-<!-- All Other Months -->
-<% Date::MONTHNAMES.compact.each do |month| %>
-  <% next if month == current_month %> <!-- Skip Current Month -->
-
-  <div class="mb-8">
-    <!-- Month Title -->
-    <h2 class="text-xl font-semibold mb-4"><%= month %></h2>
-
-    <!-- Inline Blocks -->
-    <div class="flex space-x-4">
-      <!-- Estimation Block -->
-      <div class="bg-blue-100 p-4 rounded shadow flex-1">
-        <h3 class="text-lg font-medium mb-2">Estimation</h3>
-        <p class="text-gray-600">Details about the estimation for <%= month %> <%= params[:year] || Time.now.year %>.</p>
-        <div class="mt-4">
-          <% if @estimation_plan[Date::MONTHNAMES.find_index(month)] %>
-            <%= @estimation_plan[Date::MONTHNAMES.find_index(month)] %>
-          <% else %>
-            <%= link_to plans_path(year: params[:year], month: Date::MONTHNAMES.find_index(month), plan_type: :estimation), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
-              Create
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-
-      <!-- Actual Block -->
-      <div class="bg-green-100 p-4 rounded shadow flex-1">
-        <h3 class="text-lg font-medium mb-2">Actual</h3>
-        <p class="text-gray-600">Details about the actual for <%= month %> <%= params[:year] || Time.now.year %>.</p>
-        <div class="mt-4">
-          <% if @actual_plan[Date::MONTHNAMES.find_index(month)] %>
-            <%= @actual_plan[Date::MONTHNAMES.find_index(month)] %>
-          <% else %>
-            <%= link_to plans_path(year: params[:year], month: Date::MONTHNAMES.find_index(month), plan_type: :actual), data: {turbo_method: :post} ,class: "bg-blue-500 text-white rounded p-2" do %>
-              Create
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>

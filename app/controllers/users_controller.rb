@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    render :show
+    render :index
   end
 
   def update
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('me', partial: 'users/profiles', locals: { user: current_user })
         end
-        format.html { render :show, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
       end
     end
   end
