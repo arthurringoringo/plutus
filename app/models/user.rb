@@ -8,4 +8,6 @@ class User < ApplicationRecord
   # validates :password, presence: true, length: { minimum: 6 }
 
   has_many :plans, class_name: "Plan", foreign_key: "user_id"
+  has_many :incomes
+  has_many :expenses
 end

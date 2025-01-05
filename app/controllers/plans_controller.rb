@@ -22,5 +22,32 @@ class PlansController < ApplicationController
   end
 
 
+  def add_income
+    @plan = current_user.plans.find(params[:id])
+    @plan.incomes.create!(amount: params[:income][:amount], name: params[:income][:name], user_id: current_user.id)
+    redirect_to plan_path(id: @plan.id)
+  end
+
+  def delete_income
+    income = current_user.incomes.find(params[:id])
+    @plan = income.plan
+    income.destroy
+    redirect_to plan_path(id: @plan.id)
+  end
+
+  def add_expense
+    @plan = current_user.plans.find(params[:id])
+    @plan.expenses.create!(amount: params[:expense][:amount], name: params[:expense][:name], user_id: current_user.id, is_debt_payment: params[:expense][:is_debt_payment])
+    redirect_to plan_path(id: @plan.id)
+  end
+
+  def delete_expense
+    expense = current_user.expenses.find(params[:id])
+    @plan = expense.plan
+    expense.destroy
+    redirect_to plan_path(id: @plan.id)
+  end
+
+
 
 end

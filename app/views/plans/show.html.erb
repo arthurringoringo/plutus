@@ -1,47 +1,49 @@
-<!--<h1> This is show plan page</h1>-->
-<%#= @plan.inspect %>
 <div class="mx-auto mt-8 space-y-8">
   <!-- Plan Details -->
   <div class="p-6 bg-gray-100 rounded-lg shadow">
-    <h1 class="text-3xl font-bold text-gray-700"><%= Date::MONTHNAMES[@plan.month] %> Plan</h1>
-    <div class="mt-4 text-gray-600">
-      <p class="text-lg"><strong>Year:</strong> <%= @plan.year %></p>
-      <p class="text-lg"><strong>Plan Type:</strong> <%= @plan.plan_type.capitalize %></p>
-      <p class="text-sm mt-2">Created At: <%= @plan.created_at.strftime("%B %d, %Y") %></p>
-      <p class="text-sm">Updated At: <%= @plan.updated_at.strftime("%B %d, %Y") %></p>
+    <h1 class="text-3xl font-bold text-gray-700 mb-6"><%= Date::MONTHNAMES[@plan.month] %> Plan</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Box 1: General Information -->
+      <div class="p-4 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-gray-700">General Information</h2>
+        <div class="mt-4 text-gray-600">
+          <p class="text-lg"><strong>Year:</strong> <%= @plan.year %></p>
+          <p class="text-lg"><strong>Plan Type:</strong> <%= @plan.plan_type.capitalize %></p>
+          <p class="text-sm"><strong>Created At:</strong> <%= @plan.created_at.strftime("%B %d, %Y") %></p>
+          <p class="text-sm"><strong>Updated At:</strong> <%= @plan.updated_at.strftime("%B %d, %Y") %></p>
+        </div>
+      </div>
+
+      <!-- Box 2: Summary -->
+      <%= render "plans/summary", plan: @plan %>
     </div>
   </div>
+
 
   <!-- Inline Grid Boxes -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <!-- Income Box -->
-    <div class="p-6 bg-green-100 rounded-lg shadow hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-green-700">Income</h2>
-      <ul class="mt-4 space-y-2">
-        <%# @incomes.each do |income| %>
-<!--          <li class="text-gray-600"><%#= income.name %>: <%#= number_to_currency(income.amount) %></li>-->
-        <%# end %>
-      </ul>
-    </div>
+    <%= render "plans/income" %>
 
     <!-- Expense Box -->
-    <div class="p-6 bg-red-100 rounded-lg shadow hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-red-700">Expenses</h2>
-      <ul class="mt-4 space-y-2">
-        <%# @expenses.each do |expense| %>
-<!--          <li class="text-gray-600"><%#= expense.name %>: <%#= number_to_currency(expense.amount) %></li>-->
-        <%# end %>
-      </ul>
-    </div>
+    <%= render "plans/expense" %>
 
     <!-- Savings Box -->
-    <div class="p-6 bg-blue-100 rounded-lg shadow hover:shadow-md transition-shadow">
-      <h2 class="text-xl font-bold text-blue-700">Savings</h2>
-      <ul class="mt-4 space-y-2">
-        <%# @savings.each do |saving| %>
-<!--          <li class="text-gray-600"><%#= saving.name %>: <%#= number_to_currency(saving.amount) %></li>-->
-        <%# end %>
-      </ul>
-    </div>
+
+    <%= render "plans/savings" %>
   </div>
 </div>
+
+
+
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+        } else {
+            modal.classList.add('hidden');
+        }
+    }
+</script>

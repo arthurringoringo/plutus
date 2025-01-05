@@ -17,4 +17,10 @@ Rails.application.routes.draw do
   post 'plans', to: 'plans#create'
   get 'plan', to: 'plans#show'
 
+  post 'incomes',to: 'plans#add_income'
+  delete 'income', to: 'plans#delete_income'
+
+  post 'expense',to: 'plans#add_expense'
+  delete 'expense', to: 'plans#delete_expense'
+
 end
