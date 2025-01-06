@@ -4,9 +4,9 @@
     <p class="text-sm"><strong>Total Income:</strong> <%= number_to_currency(plan.total_incomes, unit: "IDR ") %> </p>
     <p class="text-sm"><strong>Total Expense:</strong> <%= number_to_currency(plan.total_expense, unit: "IDR ") %>
       <% if plan.total_expense != 0 %>
-        <i class="text-yellow-600"><%= "#{((plan.total_expense/plan.total_incomes) * 100).round(2)}% of income" %></i>
+        <i class="text-yellow-600"><%= "#{plan.percentage_of_total_expense}% of income" %></i>
       <% end %>
     </p>
-    <p class="text-sm"><strong>Balance:</strong> <%= number_to_currency(plan.total_incomes - plan.total_expense, unit: "IDR ") %></p>
+    <p class="text-sm"><strong>Balance:</strong> <%= number_to_currency(plan.balance, unit: "IDR ") %></p>
   </div>
 </div>

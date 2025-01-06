@@ -15,6 +15,14 @@ class Plan < ApplicationRecord
     expenses.pluck(:amount).sum
   end
 
+  def balance
+    total_incomes - total_expense
+  end
+
+  def percentage_of_total_expense
+    ((total_expense/total_incomes) * 100).round(2)
+  end
+
   def total_debt_expense
     expenses.where(is_debt_payment: true).pluck(:amount).sum
   end
