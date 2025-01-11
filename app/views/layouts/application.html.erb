@@ -27,7 +27,9 @@
         <%= link_to 'Dashboard', dashboard_path, class: "block py-2 px-4 rounded hover:bg-blue-500" %>
         <%= link_to 'Profile', me_path, class: "block py-2 px-4 rounded hover:bg-blue-500" %>
         <%= link_to 'Finance Planning', plans_path(year: Time.now.year), class: "block py-2 px-4 rounded hover:bg-blue-500" %>
-        <%= link_to 'Logout', logout_path, data: { turbo_method: :delete }, class: "block py-2 px-4 rounded hover:bg-red-500" %>
+        <%= form_with url: logout_path, method: :delete do %>
+          <%= submit_tag 'Logout', class: "block py-2 px-4 rounded hover:bg-red-500" %>
+        <% end %>
       </nav>
     </aside>
 
