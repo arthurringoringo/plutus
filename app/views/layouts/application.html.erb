@@ -11,7 +11,9 @@
   <%= stylesheet_link_tag "application.tailwind", nonce: true, "data-turbo-track": "reload" %>
 
   <!-- JavaScript with nonce -->
-  <%= javascript_importmap_tags nonce: true %>
+  <%= javascript_importmap_tags do %>
+    <script type="module" nonce="<%= content_security_policy_nonce %>" src="<%= asset_path('application.js') %>"></script>
+  <% end %>
 </head>
 
 <body class="bg-gray-100 h-screen flex flex-col">
