@@ -1,25 +1,23 @@
-# Be sure to restart your server when you modify this file.
-
-# Define an application-wide content security policy.
-# See the Securing Rails Applications Guide for more information:
-# https://guides.rubyonrails.org/security.html#content-security-policy-header
+# config/initializers/content_security_policy.rb
 
 Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self, :https
     policy.font_src :self, :https
-    policy.img_src :self, :https, :data # data may be unnecessary for your use case.
+    policy.img_src :self, :https, :data # Adjust as needed
     policy.object_src :none
-    policy.script_src :unsafe_inline
-    policy.style_src :self, :https
-    # Specify URI for violation reports
+    # Remove `:unsafe_inline` and use nonces instead
+    policy.script_src :self, :https, -> { "'nonce-#{request.content_security_policy_nonce}'" }
+    policy.style_src :self, :https, -> { "'nonce-#{request.content_security_policy_nonce}'" }
+
+    # Specify URI for violation reports (optional)
     # policy.report_uri "/csp-violation-report-endpoint"
   end
 
   # Generate session nonces for permitted importmap and inline scripts
-  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+  config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w[script-src style-src]
 
-  # Report violations without enforcing the policy.
+  # Uncomment the following line if you want to debug violations without enforcing
   # config.content_security_policy_report_only = true
 end
