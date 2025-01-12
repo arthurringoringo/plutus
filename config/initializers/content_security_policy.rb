@@ -10,7 +10,7 @@ Rails.application.configure do
     policy.font_src :self, :https
     policy.img_src :self, :https, :data # data may be unnecessary for your use case.
     policy.object_src :none
-    policy.script_src :self, :https
+    policy.script_src :unsafe_inline
     policy.style_src :self, :https
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
