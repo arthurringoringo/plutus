@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 /* app/assets/stylesheets/application.tailwind.css */
-.toast-notification {
-    animation: fade-in 0.5s ease-out, fade-out 0.5s ease-in 4.5s;
-}
 
 @keyframes fade-in {
     0% { opacity: 0; }
@@ -15,14 +12,8 @@
     0% { opacity: 1; }
     100% { opacity: 0; }
 }
-.toast-notice {
-    background-color: #38a169; /* Green */
-}
 
 /* For error (alert) */
-.toast-alert {
-    background-color: #e53e3e; /* Red */
-}
 /*
 
 @layer components {
