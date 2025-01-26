@@ -6,9 +6,10 @@ Rails.application.configure do
     policy.font_src :self, :https
     policy.img_src :self, :https, :data # Adjust as needed
     policy.object_src :none
-    # Remove `:unsafe_inline` and use nonces instead
-    policy.script_src :self, :https, -> { "'nonce-#{request.content_security_policy_nonce}'" }
-    policy.style_src :self, :https, -> { "'nonce-#{request.content_security_policy_nonce}'" }
+
+    # Use nonces for scripts and styles
+    policy.script_src :self, :https, -> { "'nonce-#{SecureRandom.base64(16)}'" } # Use generator for dynamic nonces
+    policy.style_src :self, :https, -> { "'nonce-#{SecureRandom.base64(16)}'" }  # Use generator for dynamic nonces
 
     # Specify URI for violation reports (optional)
     # policy.report_uri "/csp-violation-report-endpoint"
