@@ -89,7 +89,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2">
           <div class="mt-4">
             <h3 class="text-lg font-medium mb-2">Estimation</h3>
-            <p>Details about the estimation for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
+            <p>Details about the estimation for <%= month %> <%= params[:year] || Time.now.year %>.</p>
             <div class="mt-4">
               <% if @estimation_plan[Date::MONTHNAMES.find_index(month)] %>
                 <%= link_to plan_path(id: @estimation_plan[Date::MONTHNAMES.find_index(month)].id), class: "bg-green-500 text-white rounded p-2" do %>
@@ -115,7 +115,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2">
           <div class="mt-4">
             <h3 class="text-lg font-medium mb-2">Actual</h3>
-            <p>Details about the actual for <%= current_month %> <%= params[:year] || Time.now.year %>.</p>
+            <p>Details about the actual for <%= month %> <%= params[:year] || Time.now.year %>.</p>
             <div class="mt-4">
               <% if @actual_plan[Date::MONTHNAMES.find_index(month)] %>
                 <%= link_to plan_path(id: @actual_plan[Date::MONTHNAMES.find_index(month)].id), class: "bg-green-500 text-white rounded p-2" do %>
